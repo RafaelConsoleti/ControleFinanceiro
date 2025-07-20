@@ -1,0 +1,7 @@
+mysql-connector-python
+streamlit
+pandas
+black
+XlsxWriter
+
+pip install -r bibliotecas.txt
