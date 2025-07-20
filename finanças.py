@@ -1,6 +1,7 @@
 import streamlit as st  # cria a interface com streamlit
 import pandas as pd  # tratamentos de dados
 from db import inserir_transacao, listar_transacoes  # funções de acesso para o mysql
+import io  # manipula arquivos em memoria
 
 st.title("Controle Financeiro")
 
@@ -42,6 +43,21 @@ if transacoes:  # verifica se existe alguma transação
 
     # exibe o dataframe
     st.dataframe(df, use_container_width=True)
+
+    # Botão para download do Excel
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Transações')
+        # Não precisa chamar writer.save() ou writer.close() aqui
+
+    processed_data = output.getvalue()
+
+    st.download_button(
+        label="⬇️ Baixar transações em Excel",
+        data=processed_data,
+        file_name="transacoes.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
     # calculo total
     total_receitas = df[df["Tipo"] == "receita"]["Valor (R$)"].sum()
