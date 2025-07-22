@@ -13,7 +13,9 @@ st.title("Controle Financeiro")
 # Formulário para cadastrar uma nova transação
 with st.form("form_transacao"):
     tipo = st.radio("Tipo", ["receita", "despesa"], horizontal=True)
-    categoria = st.text_input("Categoria", placeholder="Ex: alimentação, salário, lazer")
+    categoria = st.text_input(
+        "Categoria", placeholder="Ex: alimentação, salário, lazer"
+    )
     valor = st.number_input("Valor (R$)", min_value=1.00, format="%.2f")
     descricao = st.text_input("Descrição (opcional)", placeholder="Ex: Lanche ")
     enviar = st.form_submit_button("Salvar Transação")
@@ -38,7 +40,6 @@ if transacoes:
     )
     df["Data"] = pd.to_datetime(df["Data"]).dt.strftime("%d/%m/%y %H:%M")
 
-    st.write("Remover Transação:")
 
     for index, row in df.iterrows():
         cols = st.columns([1, 1, 1, 1, 2, 2, 1])
