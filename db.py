@@ -1,7 +1,7 @@
-import mysql.connector 
+import mysql.connector
 
 def conectar():
-   
+    # Estabelece conexão com o banco de dados
     return mysql.connector.connect(
         host="localhost",
         user="root",      
@@ -20,7 +20,6 @@ def inserir_transacao(tipo, categoria, valor, descricao):
     INSERT INTO transacoes (tipo, categoria, valor, descricao)
     VALUES (%s, %s, %s, %s)
     """
-
     cursor.execute(sql, (tipo, categoria, valor, descricao))
     conn.commit()
 
@@ -43,3 +42,31 @@ def listar_transacoes():
     conn.close()
 
     return resultados
+
+def deletar_transacao_por_id(transacao_id):
+    """
+    Deleta uma transação específica pelo ID.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+
+    sql = "DELETE FROM transacoes WHERE id = %s"
+    cursor.execute(sql, (transacao_id,))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+def deletar_todas_transacoes():
+    """
+    Deleta todas as transações do banco.
+    """
+    conn = conectar()
+    cursor = conn.cursor()
+
+    sql = "DELETE FROM transacoes"
+    cursor.execute(sql)
+    conn.commit()
+
+    cursor.close()
+    conn.close()
