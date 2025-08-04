@@ -1,13 +1,12 @@
 import streamlit as st  # cria a interface com streamlit
 import pandas as pd  # tratamentos de dados
-from db import inserir_transacao, listar_transacoes  # funções de acesso para o mysql
 from db import (
     inserir_transacao,
     listar_transacoes,
     deletar_transacao_por_id,
     deletar_todas_transacoes,
 )  # funções do mysql
-import io  # manipula arquivos em memória 
+import io  # manipula arquivos em memória
 
 st.title("Controle Financeiro")
 
